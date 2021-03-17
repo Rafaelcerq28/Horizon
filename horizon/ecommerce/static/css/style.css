@@ -2206,3 +2206,13 @@ textarea.input {
   width: 40px;
   height: 30px;
 }
+
+.carttr {
+  padding-right: 0px;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.carttd {
+  vertical-align: middle;
+}
