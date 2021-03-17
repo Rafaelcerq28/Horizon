@@ -2195,3 +2195,14 @@ textarea.input {
   font-size: 4rem;
   font-family: 'Archivo', sans-serif;;
 }
+
+.imgcart {
+  max-width: 60px;
+  max-height: 60px;
+  margin-right: 15px;
+}
+
+.inputcart {
+  width: 40px;
+  height: 30px;
+}

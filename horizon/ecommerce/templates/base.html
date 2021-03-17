@@ -71,7 +71,7 @@
 			<!-- /container -->
 		</div>
 		<!-- /SECTION -->
-
+<br>
 		<!-- NEWSLETTER -->
 		<div id="newsletter" class="section">
 			<!-- container -->
@@ -126,5 +126,22 @@
 		<script src="{% static 'js/jquery.zoom.min.js' %}"></script>
 		<script src="{% static 'js/main.js' %}"></script>
 
+		<script>
+		// Quantity
+		$('.qty button').on('click', function () {
+        var $button = $(this);
+        var oldValue = $button.parent().find('input').val();
+        if ($button.hasClass('btn-plus')) {
+            var newVal = parseFloat(oldValue) + 1;
+        } else {
+            if (oldValue > 0) {
+                var newVal = parseFloat(oldValue) - 1;
+            } else {
+                newVal = 0;
+            }
+        }
+        $button.parent().find('input').val(newVal);
+   		 });
+		</script>
 	</body>
 </html>
