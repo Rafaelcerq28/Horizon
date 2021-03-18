@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap %}
+{% block title %}Cadastro de Categorias{% endblock %}
+
+{% block content %}
+<div class="col-md-6 container">
+<form method="POST">
+    {% csrf_token %}
+
+    {{form.categoria | bootstrap}}
+
+    <input type="submit" class="btn btn-success" value="Enviar">
+</form>
+</div>
+{% endblock %}

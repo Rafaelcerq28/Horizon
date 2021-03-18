@@ -1,13 +1,17 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load bootstrap %}
-{% block title %}Produto X{% endblock %}
+{% block title %}Inserir Novo Produto{% endblock %}
 
 {% block content %}
-<div class="col-md-8 containet">
+<div class="col-md-8 container">
 <form method="POST">
     {% csrf_token %}
-
+ 
+    {{form.categoria | bootstrap}}
+    <a href="/cadcategoria"><i class="fas fa-plus corsucesso"> </i> Adicionar nova Categoria <br><br></a>
+    {{form.cor | bootstrap}}
+    <a href="/cadcor"><i class="fas fa-plus corsucesso"> </i> Adicionar uma nova cor <br><br></a>
     {{form.nome | bootstrap}}
     {{form.descricao | bootstrap}}
     {{form.especificacoes | bootstrap}}
@@ -15,7 +19,6 @@
     {{form.preco_desconto | bootstrap}}
     {{form.percentual_desconto | bootstrap}}
     {{form.quantidade_estoque | bootstrap}}
-
 
 
     <input type="submit" class="btn btn-success" value="Enviar">

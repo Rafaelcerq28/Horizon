@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap %}
+{% block title %}Cadastro de Cores{% endblock %}
+
+{% block content %}
+<div class="col-md-6 container-fluid">
+    <form method="POST">
+        {% csrf_token %}
+
+        {{form.cor | bootstrap}}
+        
+        <input type="submit" class="btn btn-success" value="Enviar">
+    </form>
+</div>
+{% endblock %}
