@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap %}
+{% block title %}Produto X{% endblock %}
+
+{% block content %}
+<div class="col-md-8 containet">
+<form method="POST">
+    {% csrf_token %}
+
+    {{form.nome | bootstrap}}
+    {{form.descricao | bootstrap}}
+    {{form.especificacoes | bootstrap}}
+    {{form.preco | bootstrap}}
+    {{form.preco_desconto | bootstrap}}
+    {{form.percentual_desconto | bootstrap}}
+    {{form.quantidade_estoque | bootstrap}}
+
+
+
+    <input type="submit" class="btn btn-success" value="Enviar">
+</form>
+</div>
+{% endblock %}

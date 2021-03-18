@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
+from .models import Produtos
+from .forms import ProdutoForm
 
 def home(request):
     return render(request,'ecommerce/index.html')
@@ -9,3 +11,14 @@ def detalhesproduto(request):
 
 def cart(request):
     return render(request,'ecommerce/cart.html')
+
+def cadproduto(request):
+    if request.method == 'POST':
+        form = ProdutoForm(request.POST)
+
+        if form.is_valid():
+            produto = form.save()
+            return redirect('/')
+
+    form = ProdutoForm()
+    return render(request,'ecommerce/cadproduto.html',{'form':form})
