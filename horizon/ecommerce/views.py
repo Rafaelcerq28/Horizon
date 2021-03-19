@@ -1,9 +1,13 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Produtos
 from .forms import ProdutoForm,CorForm,CategoriaForm
+import datetime
 
 def home(request):
-    return render(request,'ecommerce/index.html')
+    #entrada_ult_30d = Movimentacoes.objects.filter(tipo_mov='entrada', created_at__gte=datetime.datetime.now()-datetime.timedelta(days=30)).count()
+    lancamentos = Produtos.objects.filter(created_at__gte=datetime.datetime.now()-datetime.timedelta(days=7))
+    ls = [1,2,2,2,2,2,2,2]
+    return render(request,'ecommerce/index.html',{'lancamentos':lancamentos,'ls':ls})
 # Create your views here.
 
 def detalhesproduto(request,id):
