@@ -1,0 +1,59 @@
+{% load bootstrap %}
+{% load static %}
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="author" content="Yinka Enoch Adedokun">
+	<title>Registrar</title>
+
+    
+    <!-- Google font -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo&display=swap" rel="stylesheet">    
+
+    <link type="text/css" rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"/>
+    <link type="text/css" rel="stylesheet" href="{% static 'css/style.css' %}"/>
+</head>
+</head>
+<body>
+	<!-- Main Content -->
+	<div class="container-fluid">
+		<div class="row main-content bg-success text-center">
+			<div class="col-md-4 text-center company__info">
+                <a href="/" class="logo">
+                    <h3 class="titulo">Horizon</h3>
+                </a>
+			</div>
+			<div class="col-md-8 col-xs-12 col-sm-12 login_form ">
+				<div class="container-fluid">
+					<div class="row" style="margin-top: 2rem;">
+						<h2>Registrar</h2>
+					</div>
+					<div class="row" style="margin-top: 2rem;">
+						<form control="" class="form-group" method="post">
+
+                            {% csrf_token %}
+
+                            <input type="hidden" name="next" value="{{ next }}">
+
+                            {{ form | bootstrap}}
+                            <br>
+
+							<div class="row">
+								<input type="submit" value="Submit" class="btn">
+							</div>
+						</form>
+					</div>
+					<div class="row" style="margin-bottom: 2rem;">
+						<p>Já possui uma conta? <a href="/accounts/login/">Clique aqui para logar &hearts;</a></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Footer -->
+	<div class="container-fluid text-center footer">
+
+	</div>
+</body>

@@ -6,9 +6,43 @@
             <li><a href="#"><i class="fa fa-envelope-o"></i> email@email.com</a></li>
             <li><a href="#"><i class="fa fa-map-marker"></i> 1734 Stonecoal Road</a></li>
         </ul>
-        <ul class="header-links pull-right">
-            <li><a href="#"><i class="fa fa-user-o"></i> My Account</a></li>
+
+        <!--==========================================================================-->
+        <ul class="nav-item dropdown no-arrow pull-right">
+            {% if user.is_active %}
+                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <span class="mr-2 d-none d-lg-inline small" style="color: white;"><i class="fa fa-user-o"></i> {{user.get_username}}</span>
+                </a>
+                <!-- Dropdown - User Information -->
+                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Perfil
+                        </a>
+                    </li>
+                    {% if user.is_superuser %}
+                    <li>
+                        <a class="dropdown-item" href="#">
+                            <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Configurações
+                        </a>
+                    </li>
+                    {% endif %}
+                    <li>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="/accounts/logout"><!-- data-toggle="modal" data-target="#logoutModal" -->
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Sair
+                        </a>
+                    </li>
+                </div>
+            {% else %}
+                <li><a href="/accounts/login" style="color: white;">Clique aqui para logar</a></li>
+            {% endif %}
         </ul>
+        <!--==========================================================================-->
     </div>
 </div>
 <!-- /TOP HEADER -->
