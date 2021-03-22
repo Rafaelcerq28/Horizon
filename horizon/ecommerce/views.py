@@ -78,7 +78,10 @@ def cadclientes (request):
             user.last_name = sobrenome
             #grava os dados do usuario 
             user.save()
-            cliente = form.save(commit=False)
+            cliente = form.save(commit=True)
             return redirect('/cadclientes')
     form = ClientesForm()
     return render(request,'ecommerce/cadclientes.html',{'form':form})
+
+def editacliente (request):
+    return render(request,'ecommerce/editacliente.html')

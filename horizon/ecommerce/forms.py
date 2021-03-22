@@ -31,3 +31,16 @@ class ClientesForm (forms.ModelForm):
             'cpf': _('CPF'),
             'rg': _('RG'),
         }
+
+class EditaClienteForm (forms.ModelForm):
+    class Meta:
+        model = Clientes
+        fields = {'endereco','numero','complemento','cep','telefone','cpf','rg','sexo','idade'}
+       
+        labels = {
+            'endereco': _('Endereço',),
+            'numero': _('Número'),
+            'cep': _('CEP'),
+            'cpf': _('CPF'),
+            'rg': _('RG'),
+        }

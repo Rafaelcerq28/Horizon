@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap %}
+{% block title %}Inserir Novo Produto{% endblock %}
+
+{% block content %}
+<div class="col-md-8 container">
+<form method="POST">
+
+    {{form.endereco | bootstrap}}
+    {{form.numero | bootstrap}}
+    {{form.complemento | bootstrap}}
+    {{form.cep | bootstrap}}
+    {{form.telefone | bootstrap}}
+    {{form.rg | bootstrap}}
+    {{form.cpf | bootstrap}}
+    {{form.sexo | bootstrap}}
+    {{form.idade | bootstrap}}
+  
+
+    <input type="submit" class="btn btn-success" value="Enviar">
+</form>
+</div>
+{% endblock %}
