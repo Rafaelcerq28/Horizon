@@ -9,4 +9,5 @@ urlpatterns = [
     path('cadproduto',views.cadproduto),
     path('cadcor',views.cadcor),
     path('cadcategoria',views.cadcategoria),
+    path('cadclientes',views.cadclientes),
 ]

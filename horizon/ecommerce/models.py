@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 class Produtos(models.Model):
     nome = models.CharField(max_length=255,null=False,blank=False)
@@ -9,6 +10,7 @@ class Produtos(models.Model):
     descricao = models.TextField(null=False)
     especificacoes = models.TextField(null=False,blank=False)
     quantidade_estoque = models.IntegerField(null=False,blank=False)
+    quantidade_vendida = models.IntegerField(null=False)
     cor = models.ManyToManyField('Cores')
     #imegem = models.ForeignKey(Imagens,on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -38,14 +40,16 @@ class Categorias (models.Model):
 class Clientes (models.Model):
 
     STATUS = (
-        ('m','M'),
-        ('m','F'),
+        ('m','Masculino'),
+        ('m','Feminino'),
         ('outros','Outros')
     )
 
-    nome = models.CharField(max_length=255,blank=False,null=False)
-    endereço = models.CharField(max_length=255,blank=False,null=False)
-    complemento = models.CharField(max_length=255,blank=False,null=False)
+    usuario = models.ForeignKey(get_user_model(),on_delete = models.CASCADE)
+    #nome = models.CharField(max_length=255,blank=False,null=False)
+    endereco = models.CharField(max_length=255,blank=False,null=False)
+    numero = models.IntegerField()
+    complemento = models.CharField(max_length=255,null=False)
     cep = models.CharField(max_length=8,blank=False,null=False)
     telefone = models.CharField(max_length=11,blank=False,null=False)
     cpf = models.CharField(max_length=11,blank=False,null=False)
@@ -54,7 +58,7 @@ class Clientes (models.Model):
     idade = models.IntegerField()
 
     def __str__(self) -> str:
-        return self.cor
+        return self.usuario.first_name
 
 class Carrinho (models.Model):
     cliente = models.ForeignKey('Clientes',on_delete=models.CASCADE)    

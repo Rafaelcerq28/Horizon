@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap %}
+{% block title %}Inserir Novo Produto{% endblock %}
+
+{% block content %}
+<div class="col-md-8 container">
+<form method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+        <label class="control-label  " for="nome">Nome</label>
+        <div class=" ">
+            <input type="text" name="nome" maxlength="255" class=" form-control" required="" id="id_nome">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label  " for="sobrenome">Sobrenome</label>
+        <div class=" ">
+            <input type="text" name="sobrenome" maxlength="255" class=" form-control" required="" id="id_sobrenome">
+        </div>
+    </div>
+    {{form.endereco | bootstrap}}
+    {{form.numero | bootstrap}}
+    {{form.complemento | bootstrap}}
+    {{form.cep | bootstrap}}
+    {{form.telefone | bootstrap}}
+    {{form.rg | bootstrap}}
+    {{form.cpf | bootstrap}}
+    {{form.sexo | bootstrap}}
+    {{form.idade | bootstrap}}
+  
+
+    <input type="submit" class="btn btn-success" value="Enviar">
+</form>
+</div>
+{% endblock %}
