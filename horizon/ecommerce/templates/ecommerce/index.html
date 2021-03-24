@@ -115,7 +115,9 @@
                                         </div>
                                     </div>
                                     <div class="add-to-cart">
-                                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> COMPRAR</button>
+                                        <form action="/cart/{{lancamento.id}}/1">
+                                            <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>COMPRAR</button>
+                                        </form>
                                     </div>
                                 </div>
                                 {% endfor %}

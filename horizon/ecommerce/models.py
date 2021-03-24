@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.forms.widgets import SelectDateWidget
 
 class Produtos(models.Model):
     nome = models.CharField(max_length=255,null=False,blank=False)
@@ -57,6 +58,9 @@ class Clientes (models.Model):
     sexo = models.CharField(max_length=1,choices=STATUS)
     idade = models.IntegerField()
 
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
     def __str__(self) -> str:
         return self.usuario.first_name
 
@@ -64,6 +68,9 @@ class Carrinho (models.Model):
     cliente = models.ForeignKey('Clientes',on_delete=models.CASCADE)    
     produto = models.ForeignKey('Produtos',on_delete=models.CASCADE)
     quantidade = models.IntegerField()
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return self.cor   
+        return str(self.cliente.id) + ' - ' + str(self.produto.id)   

@@ -24,12 +24,13 @@
                                             <th>Remove</th>
                                         </tr>
                                     </thead>
+									{% for item in itens %}
                                     <tbody class="align-middle">
                                         <tr class="carttr">
                                             <td style="vertical-align: middle;">
                                                 <div class="img">
                                                     <a href="#"><img class="imgcart" src="{% static 'img/razer.jpg' %}" alt="Image"></a>
-                                                    <p>Product Name</p>
+                                                    <p>{{item.produto.nome}}</p>
                                                 </div>
                                             </td>
                                             <td style="vertical-align: middle;">$99</td>
@@ -41,9 +42,10 @@
                                                 </div>
                                             </td>
                                             <td style="vertical-align: middle;">$99</td>
-                                            <td style="vertical-align: middle;"><span><i style="color: rgb(84, 83, 83);" class="fas fa-trash fa-2x"></i></span></td>
+                                            <td style="vertical-align: middle;"><span><a href="/deletaitemdocarrinho/{{item.id}}"><i style="color: rgb(84, 83, 83);" class="fas fa-trash fa-2x"></i></a></span></td>
                                         </tr>
                                     </tbody>
+									{% endfor %}
                                 </table>
                             </div>
                         </div>

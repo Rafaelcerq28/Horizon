@@ -1,12 +1,24 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load bootstrap %}
-{% block title %}Inserir Novo Produto{% endblock %}
+{% block title %}Editar Cliente{% endblock %}
 
 {% block content %}
 <div class="col-md-8 container">
 <form method="POST">
-
+    {% csrf_token %}
+    <div class="form-group">
+        <label class="control-label  " for="nome">Nome</label>
+        <div class=" ">
+            <input type="text" name="nome" maxlength="255" class=" form-control" required="" id="id_nome" value="{{nome}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label  " for="sobrenome">Sobrenome</label>
+        <div class=" ">
+            <input type="text" name="sobrenome" maxlength="255" class=" form-control" required="" id="id_sobrenome" value="{{sobrenome}}">
+        </div>
+    </div>
     {{form.endereco | bootstrap}}
     {{form.numero | bootstrap}}
     {{form.complemento | bootstrap}}
