@@ -35,10 +35,11 @@
                                             </td>
                                             <td style="vertical-align: middle;">$99</td>
                                             <td style="vertical-align: middle;">
-                                                <div class="qty">
-                                                    <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                                    <input class= "inputcart" type="text" value="1" style="text-align: center;">
-                                                    <button class="btn-plus"><i class="fa fa-plus"></i></button>
+                                                <div class="row">
+													<a href="/subtraiitemcarrinho/{{item.id}}"><i class="fa fa-minus"></i></a>
+                                                    <input class= "inputcart" type="text" value="{{item.quantidade}}" style="text-align: center;" disabled="">
+													<a href="/acrescentaitemcarrinho/{{item.id}}"><i class="fa fa-plus"></i></a>
+
                                                 </div>
                                             </td>
                                             <td style="vertical-align: middle;">$99</td>

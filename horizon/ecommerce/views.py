@@ -37,12 +37,24 @@ def exibecarrinho(request):
     return render(request,'ecommerce/cart.html',{'itens':itens})
 
 def deletaitemdocarrinho(request,id):
-    cli = get_object_or_404(Clientes,usuario = request.user.id)
-    #deleta item do carringo
+    #deleta item do carrinho
     produto_do_carrinho = get_object_or_404(Carrinho,pk=id)
     produto_do_carrinho.delete()
-    itens = Carrinho.objects.filter(cliente = cli.id)
-    return render(request,'ecommerce/cart.html',{'itens':itens})
+    return redirect('/exibecarrinho')
+
+def acrescentaitemcarrinho(request,id):
+    acrescenta_item = get_object_or_404(Carrinho,pk=id)
+    acrescenta_item.quantidade += 1
+    print('passou por aqui')
+    print('quantidade',acrescenta_item.quantidade)
+    acrescenta_item.save()
+    return redirect('/exibecarrinho')
+    
+def subtraiitemcarrinho(request,id):
+    subtrai_item = get_object_or_404(Carrinho,pk=id)
+    subtrai_item.quantidade -= 1
+    subtrai_item.save()
+    return redirect('/exibecarrinho')
 
 #view para cadastrar produtos
 def cadproduto(request):
@@ -108,7 +120,10 @@ def cadclientes (request):
             user.last_name = sobrenome
             #grava os dados do usuario 
             user.save()
-            cliente = form.save(commit=True)
+            
+            cliente = form.save(commit=False)
+            cliente.usuario = user
+            cliente.save()
             return redirect('/cadclientes')
     form = ClientesForm()
     return render(request,'ecommerce/cadclientes.html',{'form':form})

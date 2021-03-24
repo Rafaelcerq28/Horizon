@@ -13,5 +13,7 @@ urlpatterns = [
     path('editacliente',views.editacliente),
     path('cart/<int:id>/<int:quantidade>',views.cart),
     path('exibecarrinho',views.exibecarrinho),
-    path('deletaitemdocarrinho/<int:id>',views.deletaitemdocarrinho)
+    path('deletaitemdocarrinho/<int:id>',views.deletaitemdocarrinho),
+    path('acrescentaitemcarrinho/<int:id>',views.acrescentaitemcarrinho),
+    path('subtraiitemcarrinho/<int:id>',views.subtraiitemcarrinho),
 ]
