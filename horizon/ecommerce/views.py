@@ -14,7 +14,8 @@ def home(request):
     if cliente == None:
         return redirect('/cadclientes')
 
-    return render(request,'ecommerce/index.html',{'lancamentos':lancamentos,'ls':ls})
+    carrinho = Carrinho.objects.filter(cliente = cliente.id)
+    return render(request,'ecommerce/index.html',{'lancamentos':lancamentos,'ls':ls,'carrinho':carrinho})
     
 #view onde exibe os detalhes do produto
 def detalhesproduto(request,id):
@@ -33,11 +34,25 @@ def cart(request,id,quantidade):
 #view para exibir o carrinho
 def exibecarrinho(request):
     cli = get_object_or_404(Clientes,usuario = request.user.id)
-    itens = Carrinho.objects.filter(cliente = cli.id)
-    precos = []
-    for i in itens:
-        precos.append(i.produto.preco * i.quantidade)
-    return render(request,'ecommerce/cart.html',{'itens':itens,'precos':precos})
+    #itens do carrinho
+    carrinho = Carrinho.objects.filter(cliente = cli.id)
+    
+    #operação para gerar os produtos, quantidades e valores atualizados
+    produtos = []
+    total = 0
+    for item in carrinho:
+        #lê cada um dos itens e salva em uma lista
+        obj = []
+        obj.append(item.quantidade)
+        obj.append(item.produto.nome)
+        obj.append(item.quantidade * item.produto.preco)
+        #grava a lista com os itens em uma outra lista
+        produtos.append(obj)
+        #calcula os totais 
+        total += (item.quantidade * item.produto.preco)
+
+    print(produtos)
+    return render(request,'ecommerce/cart.html',{'carrinho':carrinho,'produtos':produtos,'total':total})
 
 def deletaitemdocarrinho(request,id):
     #deleta item do carrinho
@@ -48,8 +63,6 @@ def deletaitemdocarrinho(request,id):
 def acrescentaitemcarrinho(request,id):
     acrescenta_item = get_object_or_404(Carrinho,pk=id)
     acrescenta_item.quantidade += 1
-    print('passou por aqui')
-    print('quantidade',acrescenta_item.quantidade)
     acrescenta_item.save()
     return redirect('/exibecarrinho')
     

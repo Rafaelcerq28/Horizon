@@ -17,43 +17,42 @@
                                 <table class="table table-bordered">
                                     <thead class="thead-dark">
                                         <tr>
-                                            <th>Product</th>
-                                            <th>Price</th>
-                                            <th>Quantity</th>
-                                            <th>Total</th>
-                                            <th>Remove</th>
+                                            <th>Produto</th>
+                                            <th>Preço</th>
+                                            <th>Quantidade</th>
+                                            <!--<th>Total</th>-->
+                                            <th>Remover</th>
                                         </tr>
                                     </thead>
-									{% for item in itens %}
-										
-                                    <tbody class="align-middle">
-                                        <tr class="carttr">
-                                            <td style="vertical-align: middle;">
-                                                <div class="img">
-                                                    <a href="#"><img class="imgcart" src="{% static 'img/razer.jpg' %}" alt="Image"></a>
-                                                    <p>{{item.produto.nome}}</p>
-                                                </div>
-                                            </td>
-                                            <td style="vertical-align: middle;">R$ {{item.produto.preco}}</td>
-                                            <td style="vertical-align: middle;">
-                                                <div class="row">
-													<a href="/subtraiitemcarrinho/{{item.id}}" class="margembtn"><i class="fa fa-minus"></i></a>
-                                                    <input class= "inputcart" type="text" value="{{item.quantidade}}" style="text-align: center;" disabled="">
-													<a href="/acrescentaitemcarrinho/{{item.id}}" class="margembtn"><i class="fa fa-plus"></i></a>
+									{% for item in carrinho %}										
+										<tbody class="align-middle">
+											<tr class="carttr">
+												<td style="vertical-align: middle;">
+													<div class="img">
+														<a href="#"><img class="imgcart" src="{% static 'img/razer.jpg' %}" alt="Image"></a>
+														<p>{{item.produto.nome}}</p>
+													</div>
+												</td>
+												<td style="vertical-align: middle;">R$ {{item.produto.preco}}</td>
+												<td style="vertical-align: middle;">
+													<div class="row">
+														<a href="/subtraiitemcarrinho/{{item.id}}" class="margembtn"><i class="fa fa-minus"></i></a>
+														<input class= "inputcart" type="text" value="{{item.quantidade}}" style="text-align: center;" disabled="">
+														<a href="/acrescentaitemcarrinho/{{item.id}}" class="margembtn"><i class="fa fa-plus"></i></a>
 
-                                                </div>
-                                            </td>
-                                            <td style="vertical-align: middle;">R$</td>
-                                            <td style="vertical-align: middle;"><span><a href="/deletaitemdocarrinho/{{item.id}}"><i style="color: rgb(84, 83, 83);" class="fas fa-trash fa-2x"></i></a></span></td>
-                                        </tr>
-                                    </tbody>
+													</div>
+												</td>
+												<!--<td style="vertical-align: middle;">R$</td>-->
+												<td style="vertical-align: middle;"><span><a href="/deletaitemdocarrinho/{{item.id}}"><i style="color: rgb(84, 83, 83);" class="fas fa-trash fa-2x"></i></a></span></td>
+											</tr>
+										</tbody>
 									{% endfor %}
                                 </table>
                             </div>
                         </div>
 
 					</div>
-
+					<br>
 					<!-- Order Details -->
 					<div class="col-md-5 order-details">
 						<div class="section-title text-center">
@@ -61,27 +60,26 @@
 						</div>
 						<div class="order-summary">
 							<div class="order-col">
-								<div><strong>PRODUCT</strong></div>
+								<div><strong>PRODUTO</strong></div>
 								<div><strong>TOTAL</strong></div>
 							</div>
 							<div class="order-products">
-								<div class="order-col">
-									<div>1x Product Name Goes Here</div>
-									<div>$980.00</div>
-								</div>
-								<div class="order-col">
-									<div>2x Product Name Goes Here</div>
-									<div>$980.00</div>
-								</div>
+								{% for produto in produtos %}
+									
+									<div class="order-col">
+										<div>{{produto.0}}x {{produto.1}}</div>
+										<div>R$ {{produto.2}}</div>
+									</div>
+								{% endfor %}
 							</div>
-							<div class="order-col">
+							<!--<div class="order-col">
 								<div>Shiping</div>
 								<div><strong>FREE</strong></div>
-							</div>
+							</div>-->
                             <hr>
 							<div class="order-col">
 								<div><strong>TOTAL</strong></div>
-								<div><strong class="order-total">$2940.00</strong></div>
+								<div><strong class="order-total">${{total}}</strong></div>
 							</div>
 						</div>
 						<a href="#" class="primary-btn order-submit">Finalizar Compra</a>
