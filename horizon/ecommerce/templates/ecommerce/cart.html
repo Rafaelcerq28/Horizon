@@ -25,6 +25,7 @@
                                         </tr>
                                     </thead>
 									{% for item in itens %}
+										
                                     <tbody class="align-middle">
                                         <tr class="carttr">
                                             <td style="vertical-align: middle;">
@@ -33,16 +34,16 @@
                                                     <p>{{item.produto.nome}}</p>
                                                 </div>
                                             </td>
-                                            <td style="vertical-align: middle;">$99</td>
+                                            <td style="vertical-align: middle;">R$ {{item.produto.preco}}</td>
                                             <td style="vertical-align: middle;">
                                                 <div class="row">
-													<a href="/subtraiitemcarrinho/{{item.id}}"><i class="fa fa-minus"></i></a>
+													<a href="/subtraiitemcarrinho/{{item.id}}" class="margembtn"><i class="fa fa-minus"></i></a>
                                                     <input class= "inputcart" type="text" value="{{item.quantidade}}" style="text-align: center;" disabled="">
-													<a href="/acrescentaitemcarrinho/{{item.id}}"><i class="fa fa-plus"></i></a>
+													<a href="/acrescentaitemcarrinho/{{item.id}}" class="margembtn"><i class="fa fa-plus"></i></a>
 
                                                 </div>
                                             </td>
-                                            <td style="vertical-align: middle;">$99</td>
+                                            <td style="vertical-align: middle;">R$</td>
                                             <td style="vertical-align: middle;"><span><a href="/deletaitemdocarrinho/{{item.id}}"><i style="color: rgb(84, 83, 83);" class="fas fa-trash fa-2x"></i></a></span></td>
                                         </tr>
                                     </tbody>

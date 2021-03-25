@@ -34,7 +34,10 @@ def cart(request,id,quantidade):
 def exibecarrinho(request):
     cli = get_object_or_404(Clientes,usuario = request.user.id)
     itens = Carrinho.objects.filter(cliente = cli.id)
-    return render(request,'ecommerce/cart.html',{'itens':itens})
+    precos = []
+    for i in itens:
+        precos.append(i.produto.preco * i.quantidade)
+    return render(request,'ecommerce/cart.html',{'itens':itens,'precos':precos})
 
 def deletaitemdocarrinho(request,id):
     #deleta item do carrinho

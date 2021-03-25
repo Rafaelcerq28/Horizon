@@ -2312,3 +2312,7 @@ form{
 	background-color: #273c77;
 	color:#fff;
 }
+
+.margembtn {
+  margin: 1rem;
+}
