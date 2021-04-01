@@ -73,8 +73,9 @@ def acrescentaitemcarrinho(request,id):
     
 def subtraiitemcarrinho(request,id):
     subtrai_item = get_object_or_404(Carrinho,pk=id)
-    subtrai_item.quantidade -= 1
-    subtrai_item.save()
+    if subtrai_item.quantidade > 1:
+        subtrai_item.quantidade -= 1
+        subtrai_item.save()
     return redirect('/exibecarrinho')
 
 #view para cadastrar produtos

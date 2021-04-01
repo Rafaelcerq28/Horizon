@@ -6,7 +6,7 @@ from .models import Produtos, Categorias, Cores, Clientes
 class ProdutoForm(forms.ModelForm):
     class Meta:
         model = Produtos
-        fields = {'nome','preco','preco_desconto','percentual_desconto','descricao','especificacoes','quantidade_estoque','categoria','cor'}
+        fields = {'nome','preco','preco_desconto','percentual_desconto','descricao','especificacoes','quantidade_estoque','categoria','cor','imagem'}
 
 
 class CorForm(forms.ModelForm):

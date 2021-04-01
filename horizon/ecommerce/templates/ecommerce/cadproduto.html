@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="col-md-8 container">
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
  
     {{form.categoria | bootstrap}}
@@ -19,6 +19,7 @@
     {{form.preco_desconto | bootstrap}}
     {{form.percentual_desconto | bootstrap}}
     {{form.quantidade_estoque | bootstrap}}
+    {{form.imagem | bootstrap}}
 
 
     <input type="submit" class="btn btn-success" value="Enviar">
