@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Produtos,Clientes,Categorias,Cores,Carrinho
 from .forms import ProdutoForm,CorForm,CategoriaForm,ClientesForm
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 import datetime
 
@@ -8,13 +9,15 @@ import datetime
 def home(request):
     lancamentos = Produtos.objects.filter(created_at__gte=datetime.datetime.now()-datetime.timedelta(days=7))
     ls = [1,2,2,2,2,2,2,2]
-    
-    #pega o id do cliente e verifica se há um cliente cadastrado com esse id, caso não haja ele encaminha para o cadastro de cliente
-    cliente = Clientes.objects.filter(usuario = request.user.id).first()
-    if cliente == None:
-        return redirect('/cadclientes')
+    if request.user.is_authenticated == True:
+        #pega o id do cliente e verifica se há um cliente cadastrado com esse id, caso não haja ele encaminha para o cadastro de cliente
+        cliente = Clientes.objects.filter(usuario = request.user.id).first()
+        if cliente == None:
+            return redirect('/cadclientes')
 
-    carrinho = Carrinho.objects.filter(cliente = cliente.id)
+        carrinho = Carrinho.objects.filter(cliente = cliente.id)
+    else:
+        carrinho = ''
     return render(request,'ecommerce/index.html',{'lancamentos':lancamentos,'ls':ls,'carrinho':carrinho})
     
 #view onde exibe os detalhes do produto
@@ -22,7 +25,9 @@ def detalhesproduto(request,id):
     produto = get_object_or_404(Produtos,pk=id)
     return render(request,'ecommerce/detalhesproduto.html',{'produto':produto})
 
+
 #view para cadastrar os itens do carrinho
+@login_required
 def cart(request,id,quantidade):
     cli = get_object_or_404(Clientes,usuario = request.user.id)
     prod = get_object_or_404(Produtos,pk=id)
