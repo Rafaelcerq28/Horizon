@@ -81,8 +81,8 @@ def subtraiitemcarrinho(request,id):
 #view para cadastrar produtos
 def cadproduto(request):
     if request.method == 'POST':
-        form = ProdutoForm(request.POST)
-
+        #pega as informações do POST e a imagem e salva na form
+        form = ProdutoForm(request.POST,request.FILES)
         if form.is_valid():
             produto = form.save()
             return redirect('/')

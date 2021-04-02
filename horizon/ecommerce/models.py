@@ -13,7 +13,7 @@ class Produtos(models.Model):
     quantidade_estoque = models.IntegerField(null=False,blank=False)
     quantidade_vendida = models.IntegerField(blank=True,null=True)
     cor = models.ManyToManyField('Cores')
-    imagem = models.ImageField(null=True,blank=True, upload_to="images/")
+    imagem = models.ImageField(null=True,blank=True, upload_to="images/")   
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
