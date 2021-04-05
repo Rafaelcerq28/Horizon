@@ -104,7 +104,11 @@
                                     <div class="product-body">
                                         <p class="product-category">{{lancamento.categoria}}</p>
                                         <h3 class="product-name"><a href="/detalhesproduto/{{lancamento.id}}">{{lancamento.nome}}</a></h3>
-                                        <h4 class="product-price">R${{lancamento.preco_desconto}} <del class="product-old-price">R$ {{lancamento.preco}}</del></h4>
+                                        {% if lancamento.percentual_desconto > 0 %}
+                                            <h4 class="product-price">R${{lancamento.preco_desconto}} <del class="product-old-price">R$ {{lancamento.preco}}</del></h4>
+                                        {% else %}
+                                        <h4 class="product-price">R$ {{lancamento.preco}}</h4>
+                                        {% endif%}
                                         <div class="product-rating">
                                             <i class="fa fa-star"></i>
                                             <i class="fa fa-star"></i>
