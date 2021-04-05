@@ -68,7 +68,7 @@ class Carrinho (models.Model):
     cliente = models.ForeignKey('Clientes',on_delete=models.CASCADE)    
     produto = models.ForeignKey('Produtos',on_delete=models.CASCADE)
     quantidade = models.IntegerField()
-    
+    cor = models.ForeignKey('Cores',on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

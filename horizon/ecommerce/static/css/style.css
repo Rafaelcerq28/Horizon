@@ -1532,7 +1532,7 @@ textarea.input {
 }
 
 .product-details .product-options .input-select {
-  width: 90px;
+  width: auto;
 }
 
 .product-details .add-to-cart {

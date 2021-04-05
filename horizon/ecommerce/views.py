@@ -28,10 +28,12 @@ def detalhesproduto(request,id):
 
 #view para cadastrar os itens do carrinho
 @login_required
-def cart(request,id,quantidade):
+def cart(request,id):
+    cor= get_object_or_404(Cores,pk=request.GET.get('cor'))
+    quantidade = request.GET.get('quantidade')
     cli = get_object_or_404(Clientes,usuario = request.user.id)
     prod = get_object_or_404(Produtos,pk=id)
-    Carrinho.objects.create(cliente=cli,produto=prod,quantidade=quantidade)
+    Carrinho.objects.create(cliente=cli,produto=prod,quantidade=quantidade,cor=cor)
     
     itens = Carrinho.objects.filter(cliente = cli.id)
     return redirect('/exibecarrinho')#render(request,'ecommerce/exibecarrinho.html')
@@ -56,7 +58,7 @@ def exibecarrinho(request):
         #calcula os totais 
         total += (item.quantidade * item.produto.preco)
 
-    print(produtos)
+    
     return render(request,'ecommerce/cart.html',{'carrinho':carrinho,'produtos':produtos,'total':total})
 
 def deletaitemdocarrinho(request,id):

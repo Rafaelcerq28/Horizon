@@ -68,26 +68,29 @@
 					</div>
 					<p>{{produto.descricao}}</p>
 
-					<div class="product-options">
-						<label>
-							Cor
-							<select class="input-select">
-								{% for cor in produto.cor.all %}
-								<option value="0">{{cor}}</option>
-								{% endfor %}
-							</select>
-						</label>
-					</div>
-
-					<div class="add-to-cart">
-						<div class="qty-label">
-							Qtde
-							<div class="input-number">
-								<input type="number">
-							</div>
+					<form action="/cart/{{produto.id}}">
+						<div class="product-options">
+							<label>
+								Cor
+								<select class="input-select" name="cor">
+									{% for cor in produto.cor.all %}
+									<option value="{{cor.id}}">{{cor}}</option>
+									{% endfor %}
+								</select>
+							</label>
 						</div>
-						<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Comprar</button>
-					</div>
+
+						<div class="add-to-cart">
+							
+								<div class="qty-label">
+									Qtde
+									<div class="input-number">
+										<input name="quantidade" value="1" type="number">
+									</div>
+								</div>
+								<button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> Comprar</button>							
+						</div>
+				</form>
 
 					<ul class="product-btns">
 						<li><a href="#"><i class="fa fa-heart-o"></i> Salvar na lista de desejos</a></li>
