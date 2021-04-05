@@ -7,7 +7,7 @@ import datetime
 
 #Página inicial
 def home(request):
-    lancamentos = Produtos.objects.filter(created_at__gte=datetime.datetime.now()-datetime.timedelta(days=7))
+    lancamentos = Produtos.objects.all().order_by('-created_at')[:5]
     ls = [1,2,2,2,2,2,2,2]
     if request.user.is_authenticated == True:
         #pega o id do cliente e verifica se há um cliente cadastrado com esse id, caso não haja ele encaminha para o cadastro de cliente

@@ -95,8 +95,10 @@
                                     <div class="product-img">
                                         <img src="{{lancamento.imagem.url}}" alt="">
                                         <div class="product-label">
-                                            <span class="sale">{{lancamento.percentual_desconto}}%</span>
-                                            <span class="new">NEW</span>
+                                            {% if lancamento.percentual_desconto > 0 %}
+                                                <span class="sale">{{lancamento.percentual_desconto}}%</span>
+                                            {% endif %}
+                                                <span class="new">NEW</span>
                                         </div>
                                     </div>
                                     <div class="product-body">
