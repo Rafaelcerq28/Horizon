@@ -5,7 +5,7 @@ from django.forms.widgets import SelectDateWidget
 class Produtos(models.Model):
     nome = models.CharField(max_length=255,null=False,blank=False)
     preco = models.FloatField(null=False,blank=False)
-    preco_desconto = models.FloatField()
+    preco_desconto = models.FloatField(null=True,blank=True)
     percentual_desconto = models.IntegerField()
     categoria = models.ForeignKey('Categorias',on_delete=models.CASCADE)
     descricao = models.TextField(null=True)
@@ -13,7 +13,7 @@ class Produtos(models.Model):
     quantidade_estoque = models.IntegerField(null=False,blank=False)
     quantidade_vendida = models.IntegerField(blank=True,null=True)
     cor = models.ManyToManyField('Cores')
-    imagem = models.ImageField(null=True,blank=True, upload_to="images/")   
+    imagem = models.ImageField(null=False,blank=False, upload_to="images/")   
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

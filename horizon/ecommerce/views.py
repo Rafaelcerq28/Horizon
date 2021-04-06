@@ -8,6 +8,7 @@ import datetime
 #Página inicial
 def home(request):
     lancamentos = Produtos.objects.all().order_by('-created_at')[:5]
+    categorias = Categorias.objects.all().order_by('categoria')
     ls = [1,2,2,2,2,2,2,2]
     if request.user.is_authenticated == True:
         #pega o id do cliente e verifica se há um cliente cadastrado com esse id, caso não haja ele encaminha para o cadastro de cliente
@@ -18,8 +19,17 @@ def home(request):
         carrinho = Carrinho.objects.filter(cliente = cliente.id)
     else:
         carrinho = ''
-    return render(request,'ecommerce/index.html',{'lancamentos':lancamentos,'ls':ls,'carrinho':carrinho})
-    
+    return render(request,'ecommerce/index.html',{'lancamentos':lancamentos,'ls':ls,'carrinho':carrinho,'categorias':categorias})
+
+
+#view para acessar a loja com todos os produtos de determinada categoria
+def loja(request,id):
+    categorias = Categorias.objects.all().order_by('categoria')
+    categoria_a_ser_buscada = get_object_or_404(Categorias,pk=id)
+    produtos = Produtos.objects.filter(categoria = categoria_a_ser_buscada.id)
+    return render(request,'ecommerce/loja.html',{'categorias':categorias,'produtos':produtos})   
+
+
 #view onde exibe os detalhes do produto
 def detalhesproduto(request,id):
     produto = get_object_or_404(Produtos,pk=id)
@@ -37,6 +47,7 @@ def cart(request,id):
     
     itens = Carrinho.objects.filter(cliente = cli.id)
     return redirect('/exibecarrinho')#render(request,'ecommerce/exibecarrinho.html')
+
 
 #view para exibir o carrinho
 def exibecarrinho(request):
@@ -56,10 +67,9 @@ def exibecarrinho(request):
         #grava a lista com os itens em uma outra lista
         produtos.append(obj)
         #calcula os totais 
-        total += (item.quantidade * item.produto.preco)
-
-    
+        total += (item.quantidade * item.produto.preco)   
     return render(request,'ecommerce/cart.html',{'carrinho':carrinho,'produtos':produtos,'total':total})
+
 
 def deletaitemdocarrinho(request,id):
     #deleta item do carrinho
@@ -67,18 +77,21 @@ def deletaitemdocarrinho(request,id):
     produto_do_carrinho.delete()
     return redirect('/exibecarrinho')
 
+
 def acrescentaitemcarrinho(request,id):
     acrescenta_item = get_object_or_404(Carrinho,pk=id)
     acrescenta_item.quantidade += 1
     acrescenta_item.save()
     return redirect('/exibecarrinho')
     
+
 def subtraiitemcarrinho(request,id):
     subtrai_item = get_object_or_404(Carrinho,pk=id)
     if subtrai_item.quantidade > 1:
         subtrai_item.quantidade -= 1
         subtrai_item.save()
     return redirect('/exibecarrinho')
+
 
 #view para cadastrar produtos
 def cadproduto(request):
@@ -87,10 +100,16 @@ def cadproduto(request):
         form = ProdutoForm(request.POST,request.FILES)
         if form.is_valid():
             produto = form.save()
+            produto.preco_desconto = produto.preco - ((produto.preco/100) * produto.percentual_desconto)
+            if produto.preco_desconto <= 0:
+                produto.preco_desconto = produto.preco
+                produto.percentual_desconto = 0
+            produto.save()
             return redirect('/')
     #manda o formulario de produto para o template
     form = ProdutoForm()
     return render(request,'ecommerce/cadproduto.html',{'form':form})
+
 
 #view para cadastrar a cor 
 def cadcor(request):
@@ -108,6 +127,7 @@ def cadcor(request):
     form = CorForm()
     return render(request,'ecommerce/cadcor.html',{'form':form})
 
+
 #view para cadastrar a categoria
 def cadcategoria (request):
     if request.method == 'POST':
@@ -121,6 +141,7 @@ def cadcategoria (request):
 
     form = CategoriaForm()
     return render(request,'ecommerce/cadcategoria.html',{'form':form})
+
 
 #view para cadastro de cliente
 def cadclientes (request):
@@ -151,6 +172,7 @@ def cadclientes (request):
             return redirect('/cadclientes')
     form = ClientesForm()
     return render(request,'ecommerce/cadclientes.html',{'form':form})
+
 
 #view para editar cliente
 def editacliente (request):
