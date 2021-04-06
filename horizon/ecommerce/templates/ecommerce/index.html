@@ -134,7 +134,7 @@
                                             <i class="fa fa-star"></i>
                                         </div>
                                         <div class="product-btns">
-                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                                            <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">lista de desejos</span></button>
                                         </div>
                                     </div>
                                     <div class="add-to-cart">
@@ -170,21 +170,27 @@
     </div>
     <!-- store products -->
     <div class="row">
-        {% for l in ls %}
+        {% for produto in produtos_vendidos %}
         <!-- product -->
         <div class="col-md-3 col-xs-6" style="margin-bottom: 6rem;">
             <div class="product">
                 <div class="product-img">
-                    <img src="{% static '/img/razer.jpg' %}" alt="">
+                    <img src="{{produto.imagem.url}}" alt="">
                     <div class="product-label">
-                        <span class="sale">-30%</span>
-                        <span class="new">NEW</span>
+                        {% if produto.percentual_desconto > 0 %}
+                            <span class="sale">{{produto.percentual_desconto}}%</span>
+                        {% endif %}
+                            <span class="new">NEW</span>
                     </div>
                 </div>
                 <div class="product-body">
-                    <p class="product-category">Category</p>
-                    <h3 class="product-name"><a href="#">product name goes here</a></h3>
-                    <h4 class="product-price">$980.00 <del class="product-old-price">$990.00</del></h4>
+                    <p class="product-category">{{produto.categoria}}</p>
+                    <h3 class="product-name"><a href="/detalhesproduto/{{produto.id}}">{{produto.nome}}</a></h3>
+                    {% if produto.percentual_desconto > 0 %}
+                        <h4 class="product-price">R${{produto.preco_desconto}} <del class="product-old-price">R$ {{produto.preco}}</del></h4>
+                    {% else %}
+                    <h4 class="product-price">R$ {{produto.preco}}</h4>
+                    {% endif%}
                     <div class="product-rating">
                         <i class="fa fa-star"></i>
                         <i class="fa fa-star"></i>
@@ -193,11 +199,13 @@
                         <i class="fa fa-star"></i>
                     </div>
                     <div class="product-btns">
-                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">add to wishlist</span></button>
+                        <button class="add-to-wishlist"><i class="fa fa-heart-o"></i><span class="tooltipp">lista de desejos</span></button>
                     </div>
                 </div>
                 <div class="add-to-cart">
-                    <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i> add to cart</button>
+                    <form action="/detalhesproduto/{{produto.id}}">
+                        <button class="add-to-cart-btn"><i class="fa fa-shopping-cart"></i>COMPRAR</button>
+                    </form>
                 </div>
             </div>
         </div>

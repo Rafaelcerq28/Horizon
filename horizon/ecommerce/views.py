@@ -9,7 +9,8 @@ import datetime
 def home(request):
     lancamentos = Produtos.objects.all().order_by('-created_at')[:5]
     categorias = Categorias.objects.all().order_by('categoria')
-    ls = [1,2,2,2,2,2,2,2]
+    produtos_vendidos = Produtos.objects.filter(quantidade_vendida__gt = 0).order_by('quantidade_vendida')
+
     if request.user.is_authenticated == True:
         #pega o id do cliente e verifica se há um cliente cadastrado com esse id, caso não haja ele encaminha para o cadastro de cliente
         cliente = Clientes.objects.filter(usuario = request.user.id).first()
@@ -19,7 +20,7 @@ def home(request):
         carrinho = Carrinho.objects.filter(cliente = cliente.id)
     else:
         carrinho = ''
-    return render(request,'ecommerce/index.html',{'lancamentos':lancamentos,'ls':ls,'carrinho':carrinho,'categorias':categorias})
+    return render(request,'ecommerce/index.html',{'lancamentos':lancamentos,'carrinho':carrinho,'categorias':categorias,'produtos_vendidos':produtos_vendidos})
 
 
 #view para acessar a loja com todos os produtos de determinada categoria
