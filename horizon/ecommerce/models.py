@@ -51,6 +51,8 @@ class Clientes (models.Model):
     endereco = models.CharField(max_length=255,blank=False,null=False)
     numero = models.IntegerField()
     complemento = models.CharField(max_length=255,null=False)
+    cidade = models.CharField(max_length=55,null=False)
+    estado = models.CharField(max_length=55,null=False)
     cep = models.CharField(max_length=8,blank=False,null=False)
     telefone = models.CharField(max_length=11,blank=False,null=False)
     cpf = models.CharField(max_length=11,blank=False,null=False)

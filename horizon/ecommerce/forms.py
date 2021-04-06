@@ -22,7 +22,7 @@ class CategoriaForm(forms.ModelForm):
 class ClientesForm (forms.ModelForm):
     class Meta:
         model = Clientes
-        fields = {'endereco','numero','complemento','cep','telefone','cpf','rg','sexo','idade'}
+        fields = {'endereco','numero','complemento','cidade','estado','cep','telefone','cpf','rg','sexo','idade'}
 
         labels = {
             'endereco': _('Endereço',),
