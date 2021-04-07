@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load bootstrap %}
+{% block title %}Subtotal{% endblock %}
+
+{% block content %}
+<div class="section">
+    <!-- container -->
+    <div class="container">
+        <!-- row -->
+        <div class="row">
+    <form method="POST">
+        {% csrf_token %}
+            <div class="col-md-7">
+                <!-- Billing Details -->
+                <div class="billing-details">
+                    <div class="section-title">
+                        <h3 class="title">Dados Para entrega</h3>
+                    </div>
+                        {{form.endereco | bootstrap}}
+                        {{form.numero | bootstrap}}
+                        {{form.complemento | bootstrap}}
+                        {{form.cidade | bootstrap}}
+                        {{form.estado | bootstrap}}
+                        {{form.cep | bootstrap}}
+                        {{form.telefone | bootstrap}}
+                </div>
+                <!-- /Billing Details -->
+            </div>
+
+            <!-- Order Details -->
+            <div class="col-md-5 order-details" >
+                <div class="section-title text-center">
+                    <h3 class="title">Seu Pedido</h3>
+                </div>
+                <div class="order-summary">
+                    <div class="order-col">
+                        <div><strong>PRODUTOS</strong></div>
+                        <div><strong>TOTAL</strong></div>
+                    </div>
+                    <div class="order-products">
+                        {% for produto in produtos %}
+                            
+                            <div class="order-col">
+                                <div>{{produto.0}}x {{produto.1}}</div>
+                                <div>R$ {{produto.2}}</div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="order-col">
+                        <div><strong>TOTAL</strong></div>
+                        <div><strong class="order-total">{{total}}</strong></div>
+                    </div>
+                </div>
+                <button type="submit" class="primary-btn order-submit" style="margin-left:1.50rem;width: 365.500px;">Finalizar</button>
+            </div>
+            <!-- /Order Details -->
+        </div>
+        <!-- /row -->
+    </form>
+    </div>
+    <!-- /container -->
+</div>
+<!-- /SECTION -->
+{% endblock %}

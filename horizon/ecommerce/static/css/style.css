@@ -2317,3 +2317,9 @@ form{
 .margembtn {
   margin: 1rem;
 }
+
+.texto-sucesso{
+  text-align: center;
+  margin-top: 3rem;
+  color: #273c77;
+}

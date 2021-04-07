@@ -1,6 +1,7 @@
+from typing import Tuple
 from django.shortcuts import redirect, render, get_object_or_404
 from .models import Produtos,Clientes,Categorias,Cores,Carrinho
-from .forms import ProdutoForm,CorForm,CategoriaForm,ClientesForm
+from .forms import ProdutoForm,CorForm,CategoriaForm,ClientesForm,ClientesSubtotalForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 import datetime
@@ -9,7 +10,7 @@ import datetime
 def home(request):
     lancamentos = Produtos.objects.all().order_by('-created_at')[:5]
     categorias = Categorias.objects.all().order_by('categoria')
-    produtos_vendidos = Produtos.objects.filter(quantidade_vendida__gt = 0).order_by('quantidade_vendida')
+    produtos_vendidos = Produtos.objects.filter(quantidade_vendida__gt = 0).order_by('-quantidade_vendida')
 
     if request.user.is_authenticated == True:
         #pega o id do cliente e verifica se há um cliente cadastrado com esse id, caso não haja ele encaminha para o cadastro de cliente
@@ -69,7 +70,13 @@ def exibecarrinho(request):
         produtos.append(obj)
         #calcula os totais 
         total += (item.quantidade * item.produto.preco)   
-    return render(request,'ecommerce/cart.html',{'carrinho':carrinho,'produtos':produtos,'total':total})
+    
+    if len(carrinho) == 0:
+        vazio = True    
+    else:
+        vazio = False
+        
+    return render(request,'ecommerce/cart.html',{'carrinho':carrinho,'produtos':produtos,'total':total,'vazio':vazio})
 
 
 def deletaitemdocarrinho(request,id):
@@ -93,6 +100,53 @@ def subtraiitemcarrinho(request,id):
         subtrai_item.save()
     return redirect('/exibecarrinho')
 
+#Subtotal e finalização da venda
+def subtotal(request):
+    #busca os itens no banco
+    cli = get_object_or_404(Clientes,usuario=request.user)
+    carrinho = Carrinho.objects.filter(cliente = cli.id)
+    #cria o formulario
+    form = ClientesSubtotalForm(instance=cli)
+
+    #operação para gerar os produtos, quantidades e valores atualizados
+    produtos = []
+    total = 0
+    for item in carrinho:
+        #lê cada um dos itens e salva em uma lista
+        obj = []
+        obj.append(item.quantidade)
+        obj.append(item.produto.nome)
+        obj.append(item.quantidade * item.produto.preco)
+        #grava a lista com os itens em uma outra lista
+        produtos.append(obj)
+        #calcula os totais 
+        total += (item.quantidade * item.produto.preco) 
+    
+    #Verifica se a requisição é um POST
+    if request.method == 'POST':
+        #armazena os dados da requisição em um formulario instanciando o objeto produto
+        form = ClientesSubtotalForm(request.POST,instance=cli)
+        #Veridica se o formulario é valido
+        if form.is_valid():
+            #salva o cliente
+            cli = form.save()            
+            #passa por cada item do carrinho atualizando a quantidade vendida em cada um deles
+            for item in carrinho:
+                if item.produto.quantidade_vendida != None:
+                    item.produto.quantidade_vendida += item.quantidade
+                else:
+                    item.produto.quantidade_vendida = item.quantidade
+                #salva as modificações no produto
+                item.produto.save()
+            #Apaga os itens do carrinho
+            carrinho.delete()
+
+            return redirect('/vendafinalizada')
+    return render(request,'ecommerce/subtotal.html',{'form':form,'cli':cli,'carrinho':carrinho,'produtos':produtos,'total':total})
+
+#tela de venda finalizada
+def vendafinalizada(request):
+    return render(request,'ecommerce/vendafinalizada.html')
 
 #view para cadastrar produtos
 def cadproduto(request):

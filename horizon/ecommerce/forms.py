@@ -32,3 +32,16 @@ class ClientesForm (forms.ModelForm):
             'rg': _('RG'),
         }
 
+
+class ClientesSubtotalForm (forms.ModelForm):
+    class Meta:
+        model = Clientes
+        fields = {'endereco','numero','complemento','cidade','estado','cep','telefone'}
+
+        labels = {
+            'endereco': _('Endereço',),
+            'numero': _('Número'),
+            'cep': _('CEP'),
+            'cpf': _('CPF'),
+            'rg': _('RG'),
+        }

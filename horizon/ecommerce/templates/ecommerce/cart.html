@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
-{% block title %}Produto X{% endblock %}
+{% block title %}Carrinho{% endblock %}
 
 {% block content %}
 		<!-- SECTION -->
@@ -48,12 +48,16 @@
 										</tbody>
 									{% endfor %}
                                 </table>
+							{% if vazio == True %}
+								<h3 style="text-align: center;margin-top: 3rem;">Seu carrinho está vazio</h3>
+							{% endif %}
                             </div>
                         </div>
 
 					</div>
 					<br>
 					<!-- Order Details -->
+					{% if vazio != True %}
 					<div class="col-md-5 order-details">
 						<div class="section-title text-center">
 							<h3 class="title">Itens do Carrinho</h3>
@@ -82,8 +86,9 @@
 								<div><strong class="order-total">${{total}}</strong></div>
 							</div>
 						</div>
-						<a href="#" class="primary-btn order-submit">Finalizar Compra</a>
+						<a href="/subtotal" class="primary-btn order-submit">Finalizar Pedido</a>
 					</div>
+					{% endif %}
 					<!-- /Order Details -->
 				</div>
 				<!-- /row -->
