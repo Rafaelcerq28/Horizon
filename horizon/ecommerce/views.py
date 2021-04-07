@@ -29,7 +29,8 @@ def loja(request,id):
     categorias = Categorias.objects.all().order_by('categoria')
     categoria_a_ser_buscada = get_object_or_404(Categorias,pk=id)
     produtos = Produtos.objects.filter(categoria = categoria_a_ser_buscada.id)
-    return render(request,'ecommerce/loja.html',{'categorias':categorias,'produtos':produtos})   
+
+    return render(request,'ecommerce/loja.html',{'categorias':categorias,'produtos':produtos,'categoria_a_ser_buscada':categoria_a_ser_buscada})   
 
 
 #view onde exibe os detalhes do produto
@@ -52,6 +53,7 @@ def cart(request,id):
 
 
 #view para exibir o carrinho
+@login_required
 def exibecarrinho(request):
     cli = get_object_or_404(Clientes,usuario = request.user.id)
     #itens do carrinho
