@@ -19,4 +19,7 @@ urlpatterns = [
     path('subtotal',views.subtotal),
     path('vendafinalizada',views.vendafinalizada),
     path('loja/<int:id>',views.loja),
+    path('listadedesejos/<int:id>',views.listadedesejos),
+    path('exibelistadedesejos',views.exibelistadedesejos),
+    path('removelistadedesejos/<int:id>',views.removelistadedesejos),
 ]

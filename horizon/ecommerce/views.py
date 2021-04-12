@@ -1,10 +1,14 @@
 from typing import Tuple
 from django.shortcuts import redirect, render, get_object_or_404
-from .models import Produtos,Clientes,Categorias,Cores,Carrinho
+from .models import Produtos,Clientes,Categorias,Cores,Carrinho,ListaDeDesejos
 from .forms import ProdutoForm,CorForm,CategoriaForm,ClientesForm,ClientesSubtotalForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 import datetime
+
+#========================================================
+#==== PÁGINA INICIAL ====================================
+#========================================================
 
 #Página inicial
 def home(request):
@@ -24,6 +28,10 @@ def home(request):
     return render(request,'ecommerce/index.html',{'lancamentos':lancamentos,'carrinho':carrinho,'categorias':categorias,'produtos_vendidos':produtos_vendidos})
 
 
+#========================================================
+#==== LOJA ==============================================
+#========================================================
+
 #view para acessar a loja com todos os produtos de determinada categoria
 def loja(request,id):
     categorias = Categorias.objects.all().order_by('categoria')
@@ -38,6 +46,43 @@ def detalhesproduto(request,id):
     produto = get_object_or_404(Produtos,pk=id)
     return render(request,'ecommerce/detalhesproduto.html',{'produto':produto})
 
+#========================================================
+#==== LISTA DE DESEJOS ==================================
+#========================================================
+
+@login_required
+def listadedesejos(request,id):
+    produto = get_object_or_404(Produtos,pk=id)
+    cliente = get_object_or_404(Clientes,usuario = request.user.id)
+
+    check = ListaDeDesejos.objects.filter(produto=produto,cliente=cliente)
+    print(len(check))
+    
+    if len(check) == 0:
+        ListaDeDesejos.objects.create(produto=produto,cliente=cliente)
+        return redirect('/exibelistadedesejos')
+    #inserir um return para a página do produto e exibir uma mensagem informando que ele foi salvo na lista de desejos
+    return redirect('/exibelistadedesejos')
+
+def exibelistadedesejos(request):
+    cliente = get_object_or_404(Clientes,usuario = request.user.id)
+    lista = ListaDeDesejos.objects.filter(cliente = cliente.id)
+    
+    if len(lista) == 0:
+        vazio = True
+    else:
+        vazio = False
+
+    return render(request,'ecommerce/exibelistadedesejos.html',{'lista':lista,'vazio':vazio})
+
+def removelistadedesejos(request,id):
+    desejo = get_object_or_404(ListaDeDesejos,pk=id)
+    desejo.delete()
+    return redirect('/exibelistadedesejos')
+
+#========================================================
+#==== CARRINHO ==========================================
+#========================================================
 
 #view para cadastrar os itens do carrinho
 @login_required
@@ -48,7 +93,7 @@ def cart(request,id):
     prod = get_object_or_404(Produtos,pk=id)
     Carrinho.objects.create(cliente=cli,produto=prod,quantidade=quantidade,cor=cor)
     
-    itens = Carrinho.objects.filter(cliente = cli.id)
+    #itens = Carrinho.objects.filter(cliente = cli.id)
     return redirect('/exibecarrinho')#render(request,'ecommerce/exibecarrinho.html')
 
 
@@ -150,6 +195,10 @@ def subtotal(request):
 def vendafinalizada(request):
     return render(request,'ecommerce/vendafinalizada.html')
 
+#========================================================
+#==== CADASTRO DE PRODUTOS ==============================
+#========================================================
+
 #view para cadastrar produtos
 def cadproduto(request):
     if request.method == 'POST':
@@ -199,6 +248,9 @@ def cadcategoria (request):
     form = CategoriaForm()
     return render(request,'ecommerce/cadcategoria.html',{'form':form})
 
+#========================================================
+#==== CADASTRO DE CLIENTES ==============================
+#========================================================
 
 #view para cadastro de cliente
 def cadclientes (request):

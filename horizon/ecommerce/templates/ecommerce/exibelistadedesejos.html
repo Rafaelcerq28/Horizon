@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Carrinho{% endblock %}
+
+{% block content %}
+		<!-- SECTION -->
+		<div class="section">
+			<!-- container -->
+			<div class="container">
+				<!-- row -->
+				<div class="row">
+
+					<div class="col-md-7">
+						<!-- Billing Details -->
+                        <div class="cart-page-inner">
+                            <h3 style="text-transform: uppercase">Lista de desejos</h3>
+                            
+                            <!-- store products -->
+                            <div class="row">
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="thead-dark">
+                                        <tr>
+                                            <th>Produto</th>
+                                            <th>Preço</th>
+                                            <th>Remover</th>
+                                        </tr>
+                                    </thead>
+									{% for item in lista %}										
+										<tbody class="align-middle">
+											<tr class="carttr">
+												<td style="vertical-align: middle;">
+													<div class="img">
+														<a href="/detalhesproduto/{{item.produto.id}}"><img class="imgcart" src="{{item.produto.imagem.url}}" alt="Image"></a>
+														<p>{{item.produto.nome}}</p>
+													</div>
+												</td>
+												<td style="vertical-align: middle;">R$ {{item.produto.preco}}</td>
+												<td style="vertical-align: middle;"><span><a href="/removelistadedesejos/{{item.id}}"><i style="color: rgb(84, 83, 83);" class="fas fa-trash fa-2x"></i></a></span></td>
+											</tr>
+										</tbody>
+									{% endfor %}
+                                </table>
+							{% if vazio == True %}
+								<h3 style="text-align: center;margin-top: 3rem;">Sua lista está vazia</h3>
+							{% endif %}
+                            </div>
+                        </div>
+
+					</div>
+					<br>
+					<!-- Order Details -->
+				</div>
+				<!-- /row -->
+			</div>
+			<!-- /container -->
+		</div>
+		<!-- /SECTION -->
+    {% endblock %}

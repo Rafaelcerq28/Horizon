@@ -76,3 +76,12 @@ class Carrinho (models.Model):
 
     def __str__(self) -> str:
         return str(self.cliente.id) + ' - ' + str(self.produto.id)   
+
+class ListaDeDesejos(models.Model):
+    cliente = models.ForeignKey('Clientes',on_delete=models.CASCADE)
+    produto = models.ForeignKey('Produtos',on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self) -> str:
+        return str(self.cliente.id) + ' - ' + str(self.produto.id)   
