@@ -64,6 +64,7 @@ def listadedesejos(request,id):
     #inserir um return para a página do produto e exibir uma mensagem informando que ele foi salvo na lista de desejos
     return redirect('/exibelistadedesejos')
 
+@login_required
 def exibelistadedesejos(request):
     cliente = get_object_or_404(Clientes,usuario = request.user.id)
     lista = ListaDeDesejos.objects.filter(cliente = cliente.id)
@@ -75,6 +76,7 @@ def exibelistadedesejos(request):
 
     return render(request,'ecommerce/exibelistadedesejos.html',{'lista':lista,'vazio':vazio})
 
+@login_required
 def removelistadedesejos(request,id):
     desejo = get_object_or_404(ListaDeDesejos,pk=id)
     desejo.delete()
@@ -125,21 +127,21 @@ def exibecarrinho(request):
         
     return render(request,'ecommerce/cart.html',{'carrinho':carrinho,'produtos':produtos,'total':total,'vazio':vazio})
 
-
+@login_required
 def deletaitemdocarrinho(request,id):
     #deleta item do carrinho
     produto_do_carrinho = get_object_or_404(Carrinho,pk=id)
     produto_do_carrinho.delete()
     return redirect('/exibecarrinho')
 
-
+@login_required
 def acrescentaitemcarrinho(request,id):
     acrescenta_item = get_object_or_404(Carrinho,pk=id)
     acrescenta_item.quantidade += 1
     acrescenta_item.save()
     return redirect('/exibecarrinho')
     
-
+@login_required
 def subtraiitemcarrinho(request,id):
     subtrai_item = get_object_or_404(Carrinho,pk=id)
     if subtrai_item.quantidade > 1:
@@ -147,6 +149,7 @@ def subtraiitemcarrinho(request,id):
         subtrai_item.save()
     return redirect('/exibecarrinho')
 
+@login_required
 #Subtotal e finalização da venda
 def subtotal(request):
     #busca os itens no banco
@@ -192,6 +195,7 @@ def subtotal(request):
     return render(request,'ecommerce/subtotal.html',{'form':form,'cli':cli,'carrinho':carrinho,'produtos':produtos,'total':total})
 
 #tela de venda finalizada
+@login_required
 def vendafinalizada(request):
     return render(request,'ecommerce/vendafinalizada.html')
 
@@ -200,6 +204,7 @@ def vendafinalizada(request):
 #========================================================
 
 #view para cadastrar produtos
+@login_required
 def cadproduto(request):
     if request.method == 'POST':
         #pega as informações do POST e a imagem e salva na form
@@ -218,6 +223,7 @@ def cadproduto(request):
 
 
 #view para cadastrar a cor 
+@login_required
 def cadcor(request):
     if request.method == 'POST':
         form = CorForm(request.POST)
@@ -235,6 +241,7 @@ def cadcor(request):
 
 
 #view para cadastrar a categoria
+@login_required
 def cadcategoria (request):
     if request.method == 'POST':
         form = CategoriaForm(request.POST)
